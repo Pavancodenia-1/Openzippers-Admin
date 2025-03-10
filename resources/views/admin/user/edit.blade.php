@@ -12,6 +12,7 @@
     </div>
     <!-- PAGE-HEADER END -->
 
+
     <!-- Row -->
     <div class="row row-sm">
         <div class="col-lg-12">
@@ -73,7 +74,7 @@
                                 <div class="col-xl-6 mb-3">
                                     <label class="form-label mt-0" for="role">User Role</label>
                                     @if ($mode == 'edit' || $mode == 'create')
-                                        <select class="form-control select2 form-select" id="role" name="role">
+                                        <select class="form-control select2 form-select" id="role_id" name="role_id">
                                             <option value="" disabled selected hidden>Select User Role</option>
                                             <option value="0"
                                                 {{ old('role', $mode == 'edit' ? $user->role_id : '') == 0 ? 'selected' : '' }}>
@@ -392,8 +393,12 @@
                                 @endif
 
                                 @if ($mode == 'edit' || $mode == 'create')
-                                    <x-inputs.input-field class="col-xl-4 mb-3" label="Block Video Call" name="block_video_call"
-                                        type="text" :value="old('block_video_call', $mode == 'edit' ? $user->block_video_call : '')" />
+                                    <!-- <x-inputs.input-field class="col-xl-4 mb-3" label="Block Video Call" name="block_video_call"
+                                        type="text" :value="old('block_video_call', $mode == 'edit' ? $user->block_video_call : '')" /> -->
+
+                                    <x-inputs.dropdown-field class="col-xl-4 mb-3" label="Block Video Call" name="block_video_call"
+                                        :options="['1' => 'True', '0' => 'Flase']"
+                                        :selected="old('block_video_call', $mode == 'edit' ? ($user->block_video_call ?? '') : '')" />
                                 @else
                                     <div class="col-xl-4 mb-3">
                                         <label class="form-label mt-0" for="block_video_call">Block Video Call</label>
@@ -402,8 +407,12 @@
                                 @endif
 
                                 @if ($mode == 'edit' || $mode == 'create')
-                                    <x-inputs.input-field class="col-xl-4 mb-3" label="Block Audio Call" name="block_audio_call"
-                                        type="text" :value="old('block_audio_call', $mode == 'edit' ? $user->block_audio_call : '')" />
+                                    <!-- <x-inputs.input-field class="col-xl-4 mb-3" label="Block Audio Call" name="block_audio_call"
+                                        type="text" :value="old('block_audio_call', $mode == 'edit' ? $user->block_audio_call : '')" /> -->
+
+                                    <x-inputs.dropdown-field class="col-xl-4 mb-3" label="Block Audio Call" name="block_audio_call"
+                                        :options="['1' => 'Flase', '0' => 'True']"
+                                        :selected="old('block_audio_call', $mode == 'edit' ? ($user->block_audio_call ?? '') : '')" />
                                 @else
                                     <div class="col-xl-4 mb-3">
                                         <label class="form-label mt-0" for="block_audio_call">Block Audio Call</label>
@@ -412,8 +421,12 @@
                                 @endif
 
                                 @if ($mode == 'edit' || $mode == 'create')
-                                    <x-inputs.input-field class="col-xl-4 mb-3" label="Block Message" name="block_message"
-                                        type="text" :value="old('block_message', $mode == 'edit' ? $user->block_message : '')" />
+                                    <!-- <x-inputs.input-field class="col-xl-4 mb-3" label="Block Message" name="block_message"
+                                        type="text" :value="old('block_message', $mode == 'edit' ? $user->block_message : '')" /> -->
+
+                                    <x-inputs.dropdown-field class="col-xl-4 mb-3" label="Block Message" name="block_message"
+                                        :options="['1' => 'True', '0' => 'False']"
+                                        :selected="old('block_message', $mode == 'edit' ? ($user->block_message ?? '') : '')" />
                                 @else
                                     <div class="col-xl-4 mb-3">
                                         <label class="form-label mt-0" for="block_message">Block Message</label>
@@ -472,8 +485,12 @@
                                 @endif
 
                                 @if ($mode == 'edit' || $mode == 'create')
-                                    <x-inputs.input-field class="col-xl-4 mb-3" label="Enable 2fa" name="enable_2fa"
-                                        type="text" :value="old('enable_2fa', $mode == 'edit' ? $user->enable_2fa : '')" />
+                                    <!-- <x-inputs.input-field class="col-xl-4 mb-3" label="Enable 2fa" name="enable_2fa"
+                                        type="text" :value="old('enable_2fa', $mode == 'edit' ? $user->enable_2fa : '')" /> -->
+
+                                    <x-inputs.dropdown-field class="col-xl-4 mb-3" label="Enable 2fa" name="enable_2fa"
+                                        :options="['1' => 'True', '0' => 'False']"
+                                        :selected="old('enable_2fa', $mode == 'edit' ? ($user->enable_2fa ?? '') : '')" />
                                 @else
                                     <div class="col-xl-4 mb-3">
                                         <label class="form-label mt-0" for="enable_2fa">Enable 2fa</label>
@@ -482,8 +499,12 @@
                                 @endif
 
                                 @if ($mode == 'edit' || $mode == 'create')
-                                    <x-inputs.input-field class="col-xl-4 mb-3" label="Enable Geoblocking" name="enable_geoblocking"
-                                        type="text" :value="old('enable_geoblocking', $mode == 'edit' ? $user->enable_geoblocking : '')" />
+                                    <!-- <x-inputs.input-field class="col-xl-4 mb-3" label="Enable Geoblocking" name="enable_geoblocking"
+                                        type="text" :value="old('enable_geoblocking', $mode == 'edit' ? $user->enable_geoblocking : '')" /> -->
+
+                                    <x-inputs.dropdown-field class="col-xl-4 mb-3" label="Enable Geoblocking" name="enable_geoblocking"
+                                        :options="['1' => 'True', '0' => 'False']"
+                                        :selected="old('enable_geoblocking', $mode == 'edit' ? ($user->enable_geoblocking ?? '') : '')" />
                                 @else
                                     <div class="col-xl-4 mb-3">
                                         <label class="form-label mt-0" for="enable_geoblocking">Enable Geoblocking</label>
@@ -492,8 +513,12 @@
                                 @endif
 
                                 @if ($mode == 'edit' || $mode == 'create')
-                                    <x-inputs.input-field class="col-xl-4 mb-3" label="Enable Blur" name="enable_blur"
-                                        type="text" :value="old('enable_blur', $mode == 'edit' ? $user->enable_blur : '')" />
+                                    <!-- <x-inputs.input-field class="col-xl-4 mb-3" label="Enable Blur" name="enable_blur"
+                                        type="text" :value="old('enable_blur', $mode == 'edit' ? $user->enable_blur : '')" /> -->
+
+                                    <x-inputs.dropdown-field class="col-xl-4 mb-3" label="Enable Blur" name="enable_blur"
+                                        :options="['1' => 'True', '0' => 'False']"
+                                        :selected="old('enable_blur', $mode == 'edit' ? ($user->enable_blur ?? '') : '')" />
                                 @else
                                     <div class="col-xl-4 mb-3">
                                         <label class="form-label mt-0" for="enable_blur">Enable Blur</label>
@@ -514,8 +539,11 @@
 
 
                                 @if ($mode == 'edit' || $mode == 'create')
-                                    <x-inputs.input-field class="col-xl-4 mb-3" label="Artist Verify Status" name="artist_verify_status"
-                                        type="text" :value="old('artist_verify_status', $mode == 'edit' ? $user->artist_verify_status : '')" />
+                                    <!-- <x-inputs.input-field class="col-xl-4 mb-3" label="Artist Verify Status" name="artist_verify_status"
+                                        type="text" :value="old('artist_verify_status', $mode == 'edit' ? $user->artist_verify_status : '')" /> -->
+                                    <x-inputs.dropdown-field class="col-xl-4 mb-3" label="Artist Verify Status" name="artist_verify_status"
+                                        :options="['1' => 'True', '0' => 'False']"
+                                        :selected="old('artist_verify_status', $mode == 'edit' ? ($user->artist_verify_status ?? '') : '')" />
                                 @else
                                     <div class="col-xl-4 mb-3">
                                         <label class="form-label mt-0" for="artist_verify_status">Artist Verify Status</label>
@@ -525,8 +553,12 @@
 
 
                                 @if ($mode == 'edit' || $mode == 'create')
-                                    <x-inputs.input-field class="col-xl-4 mb-3" label="Accept Term And Policy" name="accept_term_and_policy"
-                                        type="text" :value="old('accept_term_and_policy', $mode == 'edit' ? $user->accept_term_and_policy : '')" />
+                                    <!-- <x-inputs.input-field class="col-xl-4 mb-3" label="Accept Term And Policy" name="accept_term_and_policy"
+                                        type="text" :value="old('accept_term_and_policy', $mode == 'edit' ? $user->accept_term_and_policy : '')" /> -->
+
+                                    <x-inputs.dropdown-field class="col-xl-4 mb-3" label="Accept Term And Policy" name="accept_term_and_policy"
+                                        :options="['1' => 'Accept', '0' => 'Reject']"
+                                        :selected="old('accept_term_and_policy', $mode == 'edit' ? ($user->accept_term_and_policy ?? '') : '')" />
                                 @else
                                     <div class="col-xl-4 mb-3">
                                         <label class="form-label mt-0" for="accept_term_and_policy">Accept Term And Policy</label>
@@ -537,7 +569,7 @@
 
                                 @if ($mode == 'edit' || $mode == 'create')
                                     <x-inputs.input-field class="col-xl-4 mb-3" label="Plan id" name="plan_id"
-                                        type="text" :value="old('plan_id', $mode == 'edit' ? $user->plan_id : '')" />
+                                        type="number" :value="old('plan_id', $mode == 'edit' ? $user->plan_id : '')" />
                                 @else
                                     <div class="col-xl-4 mb-3">
                                         <label class="form-label mt-0" for="plan_id">Plan Id</label>
@@ -548,7 +580,7 @@
 
                                 @if ($mode == 'edit' || $mode == 'create')
                                     <x-inputs.input-field class="col-xl-4 mb-3" label="Purchased Plan Date" name="purchased_plan_date"
-                                        type="text" :value="old('purchased_plan_date', $mode == 'edit' ? $user->purchased_plan_date : '')" />
+                                        type="date" :value="old('purchased_plan_date', $mode == 'edit' ? $user->purchased_plan_date : '')" />
                                 @else
                                     <div class="col-xl-4 mb-3">
                                         <label class="form-label mt-0" for="purchased_plan_date">Purchased Plan Date</label>
@@ -558,18 +590,18 @@
 
 
                                 @if ($mode == 'edit' || $mode == 'create')
-                                    <x-inputs.input-field class="col-xl-4 mb-3" label="Dob" name="Dob"
-                                        type="text" :value="old('Dob', $mode == 'edit' ? $user->Dob : '')" />
+                                    <x-inputs.input-field class="col-xl-4 mb-3" label="Dob" name="dob"
+                                        type="date" :value="old('dob', $mode == 'edit' ? $user->dob : '')" />
                                 @else
                                     <div class="col-xl-4 mb-3">
-                                        <label class="form-label mt-0" for="Dob">Dob</label>
-                                        <p class="form-control">{{ $user->Dob }}</p>
+                                        <label class="form-label mt-0" for="dob">Dob</label>
+                                        <p class="form-control">{{ $user->dob }}</p>
                                     </div>
                                 @endif
 
                                 @if ($mode == 'edit' || $mode == 'create')
                                     <x-inputs.input-field class="col-xl-4 mb-3" label="image" name="image"
-                                        type="text" :value="old('image', $mode == 'edit' ? $user->image : '')" />
+                                        type="file" :value="old('image', $mode == 'edit' ? $user->image : '')" />
                                 @else
                                     <div class="col-xl-4 mb-3">
                                         <label class="form-label mt-0" for="image">image</label>
@@ -578,8 +610,11 @@
                                 @endif
 
                                 @if ($mode == 'edit' || $mode == 'create')
-                                    <x-inputs.input-field class="col-xl-4 mb-3" label="Status" name="status"
-                                        type="text" :value="old('status', $mode == 'edit' ? $user->status : '')" />
+                                    <!-- <x-inputs.input-field class="col-xl-4 mb-3" label="Status" name="status"
+                                        type="text" :value="old('status', $mode == 'edit' ? $user->status : '')" /> -->
+                                    <x-inputs.dropdown-field class="col-xl-4 mb-3" label="Status" name="status"
+                                        :options="['1' => 'True', '0' => 'False']"
+                                        :selected="old('status', $mode == 'edit' ? ($user->status ?? '') : '')" />
                                 @else
                                     <div class="col-xl-4 mb-3">
                                         <label class="form-label mt-0" for="status">Status</label>
@@ -609,7 +644,7 @@
 
                                 @if ($mode == 'edit' || $mode == 'create')
                                     <x-inputs.input-field class="col-xl-4 mb-3" label="Country Id" name="country_id"
-                                        type="text" :value="old('country_id', $mode == 'edit' ? $user->country_id : '')" />
+                                        type="number" :value="old('country_id', $mode == 'edit' ? $user->country_id : '')" />
                                 @else
                                     <div class="col-xl-4 mb-3">
                                         <label class="form-label mt-0" for="country_id">Country Id</label>
@@ -619,7 +654,7 @@
 
                                 @if ($mode == 'edit' || $mode == 'create')
                                     <x-inputs.input-field class="col-xl-4 mb-3" label="State Id" name="state_id"
-                                        type="text" :value="old('state_id', $mode == 'edit' ? $user->state_id : '')" />
+                                        type="number" :value="old('state_id', $mode == 'edit' ? $user->state_id : '')" />
                                 @else
                                     <div class="col-xl-4 mb-3">
                                         <label class="form-label mt-0" for="state_id">State Id</label>
@@ -629,7 +664,7 @@
 
                                 @if ($mode == 'edit' || $mode == 'create')
                                     <x-inputs.input-field class="col-xl-4 mb-3" label="City Id" name="city_id"
-                                        type="text" :value="old('city_id', $mode == 'edit' ? $user->city_id : '')" />
+                                        type="number" :value="old('city_id', $mode == 'edit' ? $user->city_id : '')" />
                                 @else
                                     <div class="col-xl-4 mb-3">
                                         <label class="form-label mt-0" for="city_id">City Id</label>

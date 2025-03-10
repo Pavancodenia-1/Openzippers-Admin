@@ -49,14 +49,16 @@ class UserController extends Controller
     // VALIDATE AND STORE A NEW USER
     public function store(Request $request)
     {
+        // dd($request->all());
         $request->validate([
             'name' => 'required|string',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|min:4|confirmed',
             'password_confirmation' => 'required|min:4',
-            'role' => 'required|in:0,1,2',
+            'role_id' => 'required|in:0,1,2',
             'avatar' => 'mimes:png,jpg,jpeg,webp,svg,gif',
-            'mobile' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10|max:15',
+            'username' => 'required|string|unique:users,username',
+            'mobile' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10|max:17',
             'gender' => 'required|in:0,1,2',
             'referral_code' => 'nullable|string|max:50',
             'bio' => 'nullable|string|max:255',
@@ -91,17 +93,16 @@ class UserController extends Controller
             'audio_download_list' => 'nullable|string|max:255',
             'artist_verify_status' => 'nullable|boolean',
             'accept_term_and_policy' => 'nullable|boolean',
-
-            'plan_id' => 'required|integer|exists:plans,id',
+            'plan_id' => 'required|integer',
             'purchased_plan_date' => 'required|date',
-            'Dob' => 'required|date',
+            'dob' => 'required|date',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'status' => 'required|string',
+            'status' => 'required|boolean',
             'address' => 'nullable|string|max:255',
             'billing_detail' => 'nullable|string|max:255',
-            'country_id' => 'required|integer|exists:countries,id',
-            'state_id' => 'required|integer|exists:states,id',
-            'city_id' => 'required|integer|exists:cities,id',
+            'country_id' => 'required|integer',
+            'state_id' => 'required|integer',
+            'city_id' => 'required|integer',
             'orole' => 'nullable|string|max:255',
             'pincode' => 'required|digits:6',
             'redirect_option' => 'nullable|string|max:255',
@@ -110,13 +111,40 @@ class UserController extends Controller
 
         $user = new User();
         $user->name = $request->name;
+        $user->username = $request->username;
         $user->email = $request->email;
         $user->password = Hash::make($request->password);
         $user->role_id = $request->role;
+        $user->status = (int) $request->status;
+        $user->mobile = $request->mobile;
+        $user->gender = $request->gender;
+        $user->first_name = $request->first_name;
+        $user->last_name = $request->last_name;
+        $user->country_id = $request->country_id;
+        $user->state_id = $request->state_id;
+        $user->city_id = $request->city_id;
+        $user->pincode = $request->pincode;
+        $user->billing_address = $request->billing_address;
+        $user->dob = $request->Dob;
+        $user->plan_id = $request->plan_id;
+        $user->purchased_plan_date = $request->purchased_plan_date;
+        $user->address = $request->address;
+        $user->billing_detail = $request->billing_detail;
 
+
+        
         if ($request->hasFile('avatar')) {
             $user->avatar = FileUploader::uploadFile($request->file('avatar'), 'images/admin-avatar');
         }
+        
+        if ($request->hasFile('image')) {
+            $user->avatar = FileUploader::uploadFile($request->file('image'), 'images/admin-user_images');
+        }
+        
+        $user->fill($request->except([
+            'password', 'image', 'password_confirmation' // Exclude password fields and image to prevent override
+        ]));
+        
 
         $user->save();
 
@@ -141,6 +169,56 @@ class UserController extends Controller
             'avatar' => 'mimes:png,jpg,jpeg,webp,svg,gif',
             'password' => 'nullable|min:4|confirmed',
             'password_confirmation' => 'nullable|min:4',
+            'username' => 'required|string|unique:users,username',
+            'mobile' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10|max:17',
+            'gender' => 'required|in:0,1,2',
+            'referral_code' => 'nullable|string|max:50',
+            'bio' => 'nullable|string|max:255',
+            'location' => 'nullable|string|max:255',
+            'website' => 'nullable|url|max:255',
+            'public_profile' => 'nullable|string|max:255',
+            'open_profile' => 'nullable|string|max:255',
+            'paid_profile' => 'nullable|string|max:255',
+            'profile_access_price' => 'nullable|numeric|min:0',
+            'billing_address' => 'nullable|string|max:255',
+            'first_name' => 'required|string|max:100',
+            'last_name' => 'required|string|max:100',
+            'profile_access_price_3_months' => 'nullable|numeric|min:0',
+            'profile_access_price_6_months' => 'nullable|numeric|min:0',
+            'profile_access_price_12_months' => 'nullable|numeric|min:0',
+            'city' => 'nullable|string|max:100',
+            'state' => 'nullable|string|max:100',
+            'country' => 'nullable|string|max:100',
+            'postcode' => 'nullable|regex:/^\d{5}$/',
+            'email_verified_at' => 'nullable|date',
+            'block_video_call' => 'nullable|boolean',
+            'block_audio_call' => 'nullable|boolean',
+            'block_message' => 'nullable|boolean',
+            'birthdate' => 'nullable|date|before:today',
+            'identity_verified_at' => 'nullable|date|before:today',
+            'fcm_token' => 'nullable|string|max:255',
+            'auth_provider' => 'nullable|string|max:50',
+            'auth_provider_id' => 'nullable|string|max:255',
+            'enable_2fa' => 'nullable|boolean',
+            'enable_geoblocking' => 'nullable|boolean',
+            'enable_blur' => 'nullable|boolean',
+            'audio_download_list' => 'nullable|string|max:255',
+            'artist_verify_status' => 'nullable|boolean',
+            'accept_term_and_policy' => 'nullable|boolean',
+            'plan_id' => 'required|integer',
+            'purchased_plan_date' => 'required|date',
+            'Dob' => 'required|date',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'status' => 'required|boolean',
+            'address' => 'nullable|string|max:255',
+            'billing_detail' => 'nullable|string|max:255',
+            'country_id' => 'required|integer',
+            'state_id' => 'required|integer',
+            'city_id' => 'required|integer',
+            'orole' => 'nullable|string|max:255',
+            'pincode' => 'required|digits:6',
+            'redirect_option' => 'nullable|string|max:255',
+
         ]);
 
         $user->name = $request->name;
@@ -151,8 +229,14 @@ class UserController extends Controller
             $user->password = Hash::make($request->password);
         }
 
+        $user->update($request->except(['password', 'avatar', 'image']));
+
         if ($request->hasFile('avatar')) {
             $user->avatar = FileUploader::uploadFile($request->file('avatar'), 'images/admin-avatar', $user->avatar);
+        }
+
+        if ($request->hasFile('image')) {
+            $user->avatar = FileUploader::uploadFile($request->file('image'), 'images/admin-user_images',$user->image);
         }
 
         $user->save();
