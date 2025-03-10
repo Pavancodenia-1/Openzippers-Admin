@@ -4,23 +4,27 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use App\Helpers\FileUploader;
+
 
 class ProfileController extends Controller
 {
     public function index()
     {
-        $userId = Auth::id();
-        $user = User::find($userId);
+        $userId = Auth::guard('admin')->id();
+        $user = Admin::find($userId);
+        // dd($user);
         return view('admin.profile.index', compact('user'));
     }
 
     // Update the profile information
     public function updateProfile(Request $request)
     {
-        $user = Auth::user();
+        $user = Auth::guard('admin')->user();
 
         $request->validate([
             'name' => 'required|string|max:255',
@@ -43,7 +47,7 @@ class ProfileController extends Controller
     // Update the password
     public function updatePassword(Request $request)
     {
-        $user = Auth::user();
+        $user = Auth::guard('admin')->user();
 
         $request->validate([
             'current_password' => 'required',

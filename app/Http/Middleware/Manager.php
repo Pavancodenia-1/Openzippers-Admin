@@ -12,10 +12,10 @@ class Manager
     public function handle(Request $request, Closure $next): Response
     {
         if (
-            Auth::guard('sanctum')->check() &&
-            (Auth::guard('sanctum')->user()->user_role === '0' ||
-                Auth::guard('sanctum')->user()->user_role === '1' ||
-                Auth::guard('sanctum')->user()->user_role === '2')
+            Auth::guard('admin')->check() &&
+            (Auth::guard('admin')->user()->user_role === '0' ||
+                Auth::guard('admin')->user()->user_role === '1' ||
+                Auth::guard('admin')->user()->user_role === '2')
         ) {
             return $next($request);
         }

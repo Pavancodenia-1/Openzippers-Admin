@@ -1,5 +1,5 @@
 <div class="{{ $class }}">
-    <label class="form-label mt-0" for="{{ $name }}">{{ $label }}</label>
+    <label class="form-label mt-0" for="{{ $id ?? $name }}">{{ $label }}</label>
     <select class="form-select form-control @error($name) is-invalid @enderror" id="{{ $id }}"
         name="{{ $name }}">
         <option selected disabled hidden value="">Choose...</option>

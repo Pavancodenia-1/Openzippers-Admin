@@ -1,6 +1,8 @@
 <!doctype html>
 <html lang="en" dir="ltr">
 
+<!-- replacing auth()->user() with Auth::guard('admin')->user() -->
+
 <head>
 
     <!-- META DATA -->
@@ -13,7 +15,7 @@
         content="admin,admin dashboard,admin panel,admin template,bootstrap,clean,dashboard,flat,jquery,modern,responsive,premium admin templates,responsive admin,ui,ui kit.">
 
     <!-- FAVICON -->
-    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('assets/images/brand/favicon.ico') }}" />
+    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('assets/images/brand/favicon.png') }}" />
 
     <!-- TITLE -->
     <title>{{ env('APP_NAME') }} – @yield('admin-page-title')</title>
@@ -92,13 +94,13 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="d-flex country">
+                                        <!-- <div class="d-flex country">
                                             <a class="nav-link icon text-center" data-bs-target="#country-selector"
                                                 data-bs-toggle="modal">
                                                 <i class="fe fe-globe"></i><span
                                                     class="fs-16 ms-2 d-none d-xl-block">English</span>
                                             </a>
-                                        </div>
+                                        </div> -->
                                         <!-- COUNTRY -->
                                         <div class="d-flex country">
                                             <a class="nav-link icon theme-layout layout-setting">
@@ -118,7 +120,7 @@
                                         <div class="dropdown d-flex profile-1">
                                             <a href="javascript:void(0)" data-bs-toggle="dropdown"
                                                 class="nav-link leading-none d-flex">
-                                                <img src="{{ auth()->user()->avatar ? url(auth()->user()->avatar) : asset('assets/profile.svg') }}"
+                                                <img src="{{ Auth::guard('admin')->user()->avatar ? url(Auth::guard('admin')->user()->avatar) : asset('assets/profile.svg') }}"
                                                     alt="profile-user"
                                                     class="avatar profile-user brround cover-image">
                                             </a>
@@ -126,21 +128,21 @@
                                                 <div class="drop-heading">
                                                     <div class="text-center">
                                                         <h5 class="text-dark mb-0 fs-14 fw-semibold">
-                                                            {{ auth()->user()->name }}</h5>
-                                                        <small class="text-muted">{{ auth()->user()->email }}</small>
+                                                            {{ Auth::guard('admin')->user()->name }}</h5>
+                                                        <small class="text-muted">{{ Auth::guard('admin')->user()->email }}</small>
                                                     </div>
                                                 </div>
                                                 <div class="dropdown-divider m-0"></div>
                                                 <a class="dropdown-item" href="{{ route('admin.profile.index') }}">
                                                     <i class="dropdown-icon fe fe-user"></i> Profile
                                                 </a>
-                                                <a class="dropdown-item" href="email-inbox.html">
+                                                <!-- <a class="dropdown-item" href="email-inbox.html">
                                                     <i class="dropdown-icon fe fe-mail"></i> Inbox
                                                     <span class="badge bg-danger rounded-pill float-end">5</span>
                                                 </a>
                                                 <a class="dropdown-item" href="lockscreen.html">
                                                     <i class="dropdown-icon fe fe-lock"></i> Lockscreen
-                                                </a>
+                                                </a> -->
 
                                                 <form id="logout-form" action="{{ route('admin.auth.logout') }}"
                                                     method="POST" style="display: none;">

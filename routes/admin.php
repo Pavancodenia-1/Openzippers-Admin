@@ -1,26 +1,28 @@
 <?php
 
 use App\Http\Controllers\Admin\AuthController;
+use App\Http\Controllers\Admin\AdminAuthController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Middleware\Admin;
 use App\Http\Middleware\CheckAuthStatus;
+use App\Http\Middleware\CheckAdmin;
 use App\Http\Middleware\Manager;
 use App\Http\Middleware\Member;
 use Illuminate\Support\Facades\Route;
 
 // Guest routes
-Route::middleware('guest')->group(function () {
-    Route::get('/login', [AuthController::class, 'index'])->name('auth.login');
-    Route::post('/login', [AuthController::class, 'login'])->name('auth.submit.login');
+Route::middleware('guest:admin')->group(function () {
+    Route::get('/login', [AdminAuthController::class, 'index'])->name('auth.login');
+    Route::post('/login', [AdminAuthController::class, 'login'])->name('auth.submit.login');
 });
 
 // Authenticated admin routes
 Route::middleware([CheckAuthStatus::class])->group(function () {
 
     Route::get('/', [DashboardController::class, 'dashboard'])->name('dashboard');
-    Route::post('logout', [AuthController::class, 'logout'])->name('auth.logout');
+    Route::post('logout', [AdminAuthController::class, 'logout'])->name('auth.logout');
 
     // User management routes
     Route::prefix('users')->name('users.')->controller(UserController::class)->group(function () {

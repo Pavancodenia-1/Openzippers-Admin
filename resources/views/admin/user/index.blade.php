@@ -9,7 +9,7 @@
         <div class="d-flex justify-content-between align-items-center">
             <h1 class="page-title">Manage Users</h1>
 
-            @if (Auth()->User()->user_role <= 1)
+            @if (Auth::guard('admin')->user()->user_role<= 1)
                 <a href="{{ route('admin.users.create') }}"><x-buttons.simple-button class="btn btn-primary" type="button">Add
                         User</x-buttons.simple-button></a>
             @endif
@@ -33,9 +33,18 @@
                                     <th class="wd-15p border-bottom-0">Role</th>
                                     <th class="wd-20p border-bottom-0">Name</th>
                                     <th class="wd-15p border-bottom-0">Email</th>
+                                    <th class="wd-15p border-bottom-0">Username</th>
+                                    <th class="wd-15p border-bottom-0">Mobile</th>
+                                    <th class="wd-15p border-bottom-0">Avtar</th>
+                                    <th class="wd-15p border-bottom-0">Gender</th>
+                                    <th class="wd-15p border-bottom-0">Public Profile</th>
+                                    <th class="wd-15p border-bottom-0">Open Profile</th>
+                                    <th class="wd-15p border-bottom-0">Paid Verified</th>
+                                    <th class="wd-15p border-bottom-0">Email Verified At</th>
+                                    <th class="wd-15p border-bottom-0">ID Verified At</th>
                                     <th class="wd-25p border-bottom-0">Created At</th>
                                     <th class="wd-25p border-bottom-0">Updated At</th>
-                                    @if (auth()->user()->user_role <= 1)
+                                    @if (Auth::guard('admin')->user()->user_role <= 1)
                                         <th class="wd-25p border-bottom-0">Status</th>
                                     @endif
                                     <th class="wd-25p border-bottom-0">Action</th>
@@ -46,25 +55,43 @@
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
                                         <td>
-                                            @if ($user->user_role == 0)
-                                                Superadmin
-                                            @elseif ($user->user_role == 1)
-                                                Admin
-                                            @elseif($user->user_role == 2)
-                                                Manager
-                                            @elseif($user->user_role == 3)
-                                                Member
+                                            @if ($user->role_id == 0)
+                                                Administrator
+                                            @elseif ($user->role_id == 1)
+                                                Artist
+                                            @elseif($user->role_id == 2)
+                                                Normal User
                                             @else
                                                 Unknown
                                             @endif
                                         </td>
                                         <td>{{ $user->name }}</td>
                                         <td>{{ $user->email }}</td>
+                                        <td>{{ $user->username }}</td>
+                                        <td>{{ $user->mobile }}</td>
+                                        <td>
+                                            <img class="img-responsive br-5 rounded-circle w-100"
+                                                src="{{ file_exists(public_path($user->avatar)) && $user->avatar ? asset($user->avatar) : asset('assets/profile.svg') }}"
+                                                alt="Image">
+                                        </td>
+
+                                        <td>
+                                            @if($user->gender)
+                                                Male
+                                            @else
+                                                Female
+                                            @endif
+                                        </td>
+                                        <td>{{ $user->public_profile }}</td>
+                                        <td>{{ $user->open_profile }}</td>
+                                        <td>{{ $user->paid_profile }}</td>
+                                        <td>{{ $user->email_verified_at }}</td>
+                                        <td>{{ $user->identity_verified_at }}</td>
                                         <td>{{ $user->created_at }}</td>
                                         <td>{{ $user->updated_at }}</td>
-                                        @if (auth()->user()->user_role <= 1)
+                                        @if (Auth::guard('admin')->user()->user_role <= 1)
                                             <td class="text-center">
-                                                @if (auth()->user()->user_role < $user->user_role)
+                                                @if (Auth::guard('admin')->user()->user_role <= 1)
                                                     <x-buttons.status-switch entityType="user"
                                                         entityId="{{ $user->id }}" status="{{ $user->status }}"
                                                         ajaxUrl="{{ route('admin.users.status') }}" />
@@ -77,14 +104,14 @@
                                             <x-buttons.action-pill-button iconClass="fa fa-eye" iconColor="secondary"
                                                 href="{{ route('admin.users.view', $user->id) }}" />
 
-                                            @if (auth()->user()->user_role < $user->user_role)
+                                            @if (Auth::guard('admin')->user()->user_role <= 1)
                                                 <x-buttons.action-pill-button
                                                     href="{{ route('admin.users.edit', $user->id) }}"
                                                     iconClass="fa fa-pencil" iconColor="warning"
                                                     modalTarget="editUserModal" />
                                             @endif
 
-                                            @if (auth()->user()->user_role < $user->user_role)
+                                            @if (Auth::guard('admin')->user()->user_role <= 1)
                                                 <form action="{{ route('admin.users.destroy', $user->id) }}" method="POST"
                                                     class="d-inline">
                                                     @csrf
