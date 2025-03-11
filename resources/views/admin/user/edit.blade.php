@@ -242,8 +242,12 @@
                                 @endif
 
                                 @if ($mode == 'edit' || $mode == 'create')
-                                    <x-inputs.input-field class="col-xl-4 mb-3" label="Public Profile" name="public_profile"
-                                        type="text" :value="old('public_profile', $mode == 'edit' ? $user->public_profile : '')" />
+                                    <!-- <x-inputs.input-field class="col-xl-4 mb-3" label="Public Profile" name="public_profile"
+                                        type="text" :value="old('public_profile', $mode == 'edit' ? $user->public_profile : '')" /> -->
+
+                                    <x-inputs.dropdown-field class="col-xl-4 mb-3" label="Public Profile" name="public_profile"
+                                        :options="['1' => 'True', '0' => 'Flase']"
+                                        :selected="old('public_profile', $mode == 'edit' ? ($user->public_profile ?? '') : '')" />
                                 @else
                                     <div class="col-xl-4 mb-3">
                                         <label class="form-label mt-0" for="public_profile">Public Profile</label>
@@ -252,8 +256,12 @@
                                 @endif
 
                                 @if ($mode == 'edit' || $mode == 'create')
-                                    <x-inputs.input-field class="col-xl-4 mb-3" label="Open Profile" name="open_profile"
-                                        type="text" :value="old('open_profile', $mode == 'edit' ? $user->open_profile : '')" />
+                                    <!-- <x-inputs.input-field class="col-xl-4 mb-3" label="Open Profile" name="open_profile"
+                                        type="text" :value="old('open_profile', $mode == 'edit' ? $user->open_profile : '')" /> -->
+                                    
+                                    <x-inputs.dropdown-field class="col-xl-4 mb-3" label="Open Profile" name="open_profile"
+                                        :options="['1' => 'True', '0' => 'Flase']"
+                                        :selected="old('open_profile', $mode == 'edit' ? ($user->open_profile ?? '') : '')" />
                                 @else
                                     <div class="col-xl-4 mb-3">
                                         <label class="form-label mt-0" for="open_profile">Open Profile</label>
@@ -262,8 +270,12 @@
                                 @endif
 
                                 @if ($mode == 'edit' || $mode == 'create')
-                                    <x-inputs.input-field class="col-xl-4 mb-3" label="Paid Profile" name="paid_profile"
-                                        type="text" :value="old('paid_profile', $mode == 'edit' ? $user->paid_profile : '')" />
+                                    <!-- <x-inputs.input-field class="col-xl-4 mb-3" label="Paid Profile" name="paid_profile"
+                                        type="text" :value="old('paid_profile', $mode == 'edit' ? $user->paid_profile : '')" /> -->
+                                    
+                                    <x-inputs.dropdown-field class="col-xl-4 mb-3" label="Paid Profile" name="paid_profile"
+                                        :options="['1' => 'True', '0' => 'Flase']"
+                                        :selected="old('paid_profile', $mode == 'edit' ? ($user->paid_profile ?? '') : '')" />
                                 @else
                                     <div class="col-xl-4 mb-3">
                                         <label class="form-label mt-0" for="paid_profile">Paid Profile</label>
@@ -599,7 +611,7 @@
                                     </div>
                                 @endif
 
-                                @if ($mode == 'edit' || $mode == 'create')
+                                <!-- @if ($mode == 'edit' || $mode == 'create')
                                     <x-inputs.input-field class="col-xl-4 mb-3" label="image" name="image"
                                         type="file" :value="old('image', $mode == 'edit' ? $user->image : '')" />
                                 @else
@@ -607,7 +619,7 @@
                                         <label class="form-label mt-0" for="image">image</label>
                                         <p class="form-control">{{ $user->image }}</p>
                                     </div>
-                                @endif
+                                @endif -->
 
                                 @if ($mode == 'edit' || $mode == 'create')
                                     <!-- <x-inputs.input-field class="col-xl-4 mb-3" label="Status" name="status"
@@ -672,15 +684,16 @@
                                     </div>
                                 @endif
 
-                                @if ($mode == 'edit' || $mode == 'create')
-                                    <x-inputs.input-field class="col-xl-4 mb-3" label="orole" name="orole"
-                                        type="text" :value="old('orole', $mode == 'edit' ? $user->orole : '')" />
+                                <!-- @if ($mode == 'edit' || $mode == 'create')
+                                    <x-inputs.dropdown-field class="col-xl-4 mb-3" label="orole" name="orole"
+                                        :options="['0' => '0', '1' => '1', '2' => '2']"
+                                        :selected="old('orole', $mode == 'edit' ? ($user->orole ?? '') : '')" />
                                 @else
                                     <div class="col-xl-4 mb-3">
                                         <label class="form-label mt-0" for="orole">orole</label>
                                         <p class="form-control">{{ $user->orole }}</p>
                                     </div>
-                                @endif
+                                @endif -->
 
                                 @if ($mode == 'edit' || $mode == 'create')
                                     <x-inputs.input-field class="col-xl-4 mb-3" label="Pincode" name="pincode"
@@ -701,9 +714,6 @@
                                         <p class="form-control">{{ $user->redirect_option }}</p>
                                     </div>
                                 @endif
-
-                                
-
 
 
                             </div>

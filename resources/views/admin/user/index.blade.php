@@ -37,6 +37,7 @@
                                     <th class="wd-15p border-bottom-0">Mobile</th>
                                     <th class="wd-15p border-bottom-0">Avtar</th>
                                     <th class="wd-15p border-bottom-0">Gender</th>
+                                    <th class="wd-15p border-bottom-0">Total Posts Count</th>
                                     <th class="wd-15p border-bottom-0">Public Profile</th>
                                     <th class="wd-15p border-bottom-0">Open Profile</th>
                                     <th class="wd-15p border-bottom-0">Paid Verified</th>
@@ -76,12 +77,15 @@
                                         </td>
 
                                         <td>
-                                            @if($user->gender)
+                                            @if($user->gender==1)
                                                 Male
-                                            @else
+                                            @elseif($user->gender == 0)
                                                 Female
+                                            @else
+                                                Other
                                             @endif
                                         </td>
+                                        <td><a href="{{ route('admin.posts.show', ['id' => $user->id]) }}">{{ $user->posts_count }}</a></td>
                                         <td>{{ $user->public_profile }}</td>
                                         <td>{{ $user->open_profile }}</td>
                                         <td>{{ $user->paid_profile }}</td>

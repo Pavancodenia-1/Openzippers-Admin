@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\AdminAuthController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\PostController;
 use App\Http\Middleware\Admin;
 use App\Http\Middleware\CheckAuthStatus;
 use App\Http\Middleware\CheckAdmin;
@@ -35,7 +36,7 @@ Route::middleware([CheckAuthStatus::class])->group(function () {
             Route::delete('/{id}', 'destroy')->name('destroy');
         });
 
-        // Manager routes
+        //Manager routes
         Route::middleware(Manager::class)->group(function () {
             Route::get('edit/{id}', 'edit')->name('edit');
             Route::put('update/{id}', 'update')->name('update');
@@ -45,6 +46,30 @@ Route::middleware([CheckAuthStatus::class])->group(function () {
         Route::middleware(Member::class)->group(function () {
             Route::get('/', 'index')->name('index');
             Route::get('view/{id}', 'view')->name('view');
+        });
+    });
+
+    Route::prefix('posts')->name('posts.')->controller(PostController::class)->group(function () {
+
+        // Admin routes
+        Route::middleware(Admin::class)->group(function () {
+            Route::get('create', 'create')->name('create');
+            Route::post('store', 'store')->name('store');
+            Route::put('status', 'status')->name('status');
+            Route::delete('/{id}', 'destroy')->name('destroy');
+        });
+
+        //Manager routes
+        Route::middleware(Manager::class)->group(function () {
+            Route::get('edit/{id}', 'edit')->name('edit');
+            Route::put('update/{id}', 'update')->name('update');
+        });
+
+        // Member routes
+        Route::middleware(Member::class)->group(function () {
+            Route::get('/', 'index')->name('index');
+            Route::get('view/{id}', 'view')->name('view');
+            route::get('show/{id}', 'show')->name('show');
         });
     });
 

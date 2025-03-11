@@ -11,6 +11,25 @@ return [
             ],
         ],
     ],
+    // 'tools' => [
+    //     'title' => 'Tools & Management',
+    //     'items' => [
+    //         [
+    //             'label' => 'Users',
+    //             'icon' => 'fe fe-user',
+    //             // 'route' => 'javascript:void(0)',
+    //             'active' => 'admin/users*',
+    //             'sub_items' => [
+    //                 [
+    //                     'label' => 'Manage Users',
+    //                     'route' => 'admin.users.index',
+    //                     'active' => 'admin/users*',
+    //                 ],
+    //             ],
+    //         ],
+    //     ],
+    // ],
+
     'tools' => [
         'title' => 'Tools & Management',
         'items' => [
@@ -24,6 +43,19 @@ return [
                         'label' => 'Manage Users',
                         'route' => 'admin.users.index',
                         'active' => 'admin/users*',
+                    ],
+                ],
+            ],
+            [
+                'label' => 'Posts',
+                'icon' => 'fe fe-user',
+                // 'route' => 'javascript:void(0)',
+                'active' => 'admin/posts*',
+                'sub_items' => [
+                    [
+                        'label' => 'Manage Posts',
+                        'route' => 'admin.posts.index',
+                        'active' => 'admin/posts*',
                     ],
                 ],
             ],

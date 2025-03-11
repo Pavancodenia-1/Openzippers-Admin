@@ -19,5 +19,7 @@ class DatabaseSeeder extends Seeder
         // Create a Super Admin user
         $this->call(UserSeeder::class);
         $this->call(AdminSeeder::class);
+        $this->call(PostSeeder::class);
+
     }
 }

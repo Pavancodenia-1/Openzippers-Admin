@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
@@ -14,7 +15,15 @@ class UserController extends Controller
     // RETRIEVE ALL USERS AND DISPLAY THEM IN A VIEW
     public function index()
     {
-        $users = User::all();
+        // $users = User::all();
+        // $users = DB::table('users')
+        //     ->leftjoin('posts', 'users.id', '=', 'posts.user_id')
+        //     ->select('users.*', DB::raw('(SELECT COUNT(*) FROM posts WHERE posts.user_id = users.id) as posts_count'))
+        //     ->groupBy('users.id')
+        //     ->get();
+
+        $users = User::withCount('posts')->get(); // added a post function for this in user model
+
         return view('admin.user.index', compact('users'));
     }
 
@@ -64,9 +73,9 @@ class UserController extends Controller
             'bio' => 'nullable|string|max:255',
             'location' => 'nullable|string|max:255',
             'website' => 'nullable|url|max:255',
-            'public_profile' => 'nullable|string|max:255',
-            'open_profile' => 'nullable|string|max:255',
-            'paid_profile' => 'nullable|string|max:255',
+            'public_profile' => 'required|in:0,1',
+            'open_profile' => 'required|in:0,1',
+            'paid_profile' => 'required|in:0,1',
             'profile_access_price' => 'nullable|numeric|min:0',
             'billing_address' => 'nullable|string|max:255',
             'first_name' => 'required|string|max:100',
@@ -96,16 +105,16 @@ class UserController extends Controller
             'plan_id' => 'required|integer',
             'purchased_plan_date' => 'required|date',
             'dob' => 'required|date',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            // 'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'status' => 'required|boolean',
             'address' => 'nullable|string|max:255',
             'billing_detail' => 'nullable|string|max:255',
             'country_id' => 'required|integer',
             'state_id' => 'required|integer',
             'city_id' => 'required|integer',
-            'orole' => 'nullable|string|max:255',
+            // 'orole' => 'required|in:0,1,2',
             'pincode' => 'required|digits:6',
-            'redirect_option' => 'nullable|string|max:255',
+            'redirect_option' => 'nullable|string|max:10',
 
         ]);
 
@@ -114,7 +123,7 @@ class UserController extends Controller
         $user->username = $request->username;
         $user->email = $request->email;
         $user->password = Hash::make($request->password);
-        $user->role_id = $request->role;
+        $user->role_id = $request->role_id;
         $user->status = (int) $request->status;
         $user->mobile = $request->mobile;
         $user->gender = $request->gender;
@@ -125,7 +134,7 @@ class UserController extends Controller
         $user->city_id = $request->city_id;
         $user->pincode = $request->pincode;
         $user->billing_address = $request->billing_address;
-        $user->dob = $request->Dob;
+        $user->dob = $request->dob;
         $user->plan_id = $request->plan_id;
         $user->purchased_plan_date = $request->purchased_plan_date;
         $user->address = $request->address;
@@ -137,12 +146,12 @@ class UserController extends Controller
             $user->avatar = FileUploader::uploadFile($request->file('avatar'), 'images/admin-avatar');
         }
         
-        if ($request->hasFile('image')) {
-            $user->avatar = FileUploader::uploadFile($request->file('image'), 'images/admin-user_images');
-        }
+        // if ($request->hasFile('image')) {
+        //     $user->image = FileUploader::uploadFile($request->file('image'), 'images/admin-user_images');
+        // }
         
         $user->fill($request->except([
-            'password', 'image', 'password_confirmation' // Exclude password fields and image to prevent override
+            'password', 'password_confirmation', 'avatar'
         ]));
         
 
@@ -165,20 +174,20 @@ class UserController extends Controller
         $request->validate([
             'name' => 'required|string',
             'email' => 'required|email|unique:users,email,' . $request->id,
-            'role' => 'required|in:0,1,2',
+            'role_id' => 'required|in:0,1,2',
             'avatar' => 'mimes:png,jpg,jpeg,webp,svg,gif',
             'password' => 'nullable|min:4|confirmed',
             'password_confirmation' => 'nullable|min:4',
-            'username' => 'required|string|unique:users,username',
+            'username' => 'required|string|unique:users,username,' . $request->id,
             'mobile' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10|max:17',
             'gender' => 'required|in:0,1,2',
             'referral_code' => 'nullable|string|max:50',
             'bio' => 'nullable|string|max:255',
             'location' => 'nullable|string|max:255',
             'website' => 'nullable|url|max:255',
-            'public_profile' => 'nullable|string|max:255',
-            'open_profile' => 'nullable|string|max:255',
-            'paid_profile' => 'nullable|string|max:255',
+            'public_profile' => 'required|in:0,1',
+            'open_profile' => 'required|in:0,1',
+            'paid_profile' => 'required|in:0,1',
             'profile_access_price' => 'nullable|numeric|min:0',
             'billing_address' => 'nullable|string|max:255',
             'first_name' => 'required|string|max:100',
@@ -208,36 +217,36 @@ class UserController extends Controller
             'plan_id' => 'required|integer',
             'purchased_plan_date' => 'required|date',
             'Dob' => 'required|date',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            // 'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'status' => 'required|boolean',
             'address' => 'nullable|string|max:255',
             'billing_detail' => 'nullable|string|max:255',
             'country_id' => 'required|integer',
             'state_id' => 'required|integer',
             'city_id' => 'required|integer',
-            'orole' => 'nullable|string|max:255',
+            // 'orole' => 'required|in:0,1,2',
             'pincode' => 'required|digits:6',
-            'redirect_option' => 'nullable|string|max:255',
+            'redirect_option' => 'nullable|string|max:10',
 
         ]);
 
         $user->name = $request->name;
         $user->email = $request->email;
-        $user->role_id = $request->role;
+        $user->role_id = $request->role_id;
 
         if ($request->filled('password')) {
             $user->password = Hash::make($request->password);
         }
 
-        $user->update($request->except(['password', 'avatar', 'image']));
+        $user->update($request->except(['password', 'avatar']));
 
         if ($request->hasFile('avatar')) {
             $user->avatar = FileUploader::uploadFile($request->file('avatar'), 'images/admin-avatar', $user->avatar);
         }
 
-        if ($request->hasFile('image')) {
-            $user->avatar = FileUploader::uploadFile($request->file('image'), 'images/admin-user_images',$user->image);
-        }
+        // if ($request->hasFile('image')) {
+        //     $user->image = FileUploader::uploadFile($request->file('image'), 'images/admin-user_images',$user->image);
+        // }
 
         $user->save();
 
