@@ -1,19 +1,37 @@
 @extends('admin.layout.main')
 
-@section('admin-page-title', 'Posts')
+@section('admin-page-title', ucfirst($mode ?? 'Manage Posts'))
 
 @section('admin-main-section')
 
+<style>
+    .truncate {
+        width: 200px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis; 
+        cursor: pointer; 
+        position: relative;
+        display: inline-block; 
+    }
+
+    .truncate:hover {
+        white-space: normal;
+        overflow: visible; 
+        padding: 5px;
+    }
+</style>
 
     <!-- PAGE-HEADER -->
     <div class="page-header">
         <div class="d-flex justify-content-between align-items-center">
-            <h1 class="page-title">Manage Posts</h1>
+            <h1 class="page-title">{{ ucfirst($mode ?? 'Manage Posts') }}</h1>
             
             @if (Auth::guard('admin')->check() && Auth::guard('admin')->user()->user_role<= 1)
                 <a href="{{ route('admin.posts.create') }}"><x-buttons.simple-button class="btn btn-primary" type="button">Add
-                        User</x-buttons.simple-button></a>
+                        Post</x-buttons.simple-button></a>
             @endif
+            
         </div>
     </div>
     <!-- PAGE-HEADER END -->
@@ -37,6 +55,7 @@
                                     <th class="wd-15p border-bottom-0">Users</th>
                                     <th class="wd-15p border-bottom-0">Price</th>
                                     <th class="wd-15p border-bottom-0">Text</th>
+                                    <th class="wd-15p border-bottom-0">Profile</th>
                                     <th class="wd-15p border-bottom-0">Attachments</th>
                                     <th class="wd-15p border-bottom-0">Status</th>
                                     <th class="wd-15p border-bottom-0">Type</th>
@@ -54,7 +73,15 @@
                                         <td>{{ $post->name }}</td>
                                         <td>{{ $post->price }}</td>
                                         <!-- <td><textarea cols='30' rows='3' readonly>{{ $post->text }}</textarea> </td> -->
-                                        <td>{{ Str::limit($post->text, 100, '... (read more)') }}</td>
+                                        <td>
+                                            <div class="truncate" title="{{ $post->text }}">
+                                                {{ $post->text }}
+                                            </div>
+                                        </td>
+                                        <td> <img class="img-responsive br-5 rounded-circle w-100"
+                                                src="{{ file_exists(public_path($post->avatar)) && $post->avatar ? asset($post->avatar) : asset('assets/profile.svg') }}"
+                                                alt="Image">
+                                        </td>
                                         <td>{{ $post->filename }}</td>
                                         <td>{{ $post->status }}</td>
                                         <td>{{ $post->type }}</td>
