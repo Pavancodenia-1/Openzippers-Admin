@@ -38,11 +38,11 @@ class UserController extends Controller
     public function edit($id)
     {
         $user = User::findOrFail($id);
-        
+
         if ((int)Auth::guard('admin')->user()->user_role > 1) {
             abort(403, 'You cannot edit users of equal or higher rank');
         }
-        
+
         $mode = 'edit';
         return view('admin.user.edit', compact('mode', 'user'));
     }
@@ -141,19 +141,21 @@ class UserController extends Controller
         $user->billing_detail = $request->billing_detail;
 
 
-        
+
         if ($request->hasFile('avatar')) {
             $user->avatar = FileUploader::uploadFile($request->file('avatar'), 'images/admin-avatar');
         }
-        
+
         // if ($request->hasFile('image')) {
         //     $user->image = FileUploader::uploadFile($request->file('image'), 'images/admin-user_images');
         // }
-        
+
         $user->fill($request->except([
-            'password', 'password_confirmation', 'avatar'
+            'password',
+            'password_confirmation',
+            'avatar'
         ]));
-        
+
 
         $user->save();
 
@@ -166,7 +168,7 @@ class UserController extends Controller
         $user = User::findOrFail($request->id);
 
         // dd($request->all());
-        
+
         if ((int)Auth::guard('admin')->user()->user_role > 1) {
             abort(403, 'You cannot update users');
         }
@@ -198,7 +200,7 @@ class UserController extends Controller
             'city' => 'nullable|string|max:100',
             'state' => 'nullable|string|max:100',
             'country' => 'nullable|string|max:100',
-            'postcode' => 'nullable|regex:/^\d{5}$/',
+            'postcode' => 'nullable',
             'email_verified_at' => 'nullable|date',
             'block_video_call' => 'nullable|boolean',
             'block_audio_call' => 'nullable|boolean',
@@ -215,8 +217,8 @@ class UserController extends Controller
             'artist_verify_status' => 'nullable|boolean',
             'accept_term_and_policy' => 'nullable|boolean',
             'plan_id' => 'required|integer',
-            'purchased_plan_date' => 'required|date',
-            'Dob' => 'required|date',
+            'purchased_plan_date' => 'nullable|date',
+            'dob' => 'required|date',
             // 'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'status' => 'required|boolean',
             'address' => 'nullable|string|max:255',
@@ -225,7 +227,7 @@ class UserController extends Controller
             'state_id' => 'required|integer',
             'city_id' => 'required|integer',
             // 'orole' => 'required|in:0,1,2',
-            'pincode' => 'required|digits:6',
+            'pincode' => 'required',
             'redirect_option' => 'nullable|string|max:10',
 
         ]);
@@ -257,11 +259,11 @@ class UserController extends Controller
     public function destroy($id)
     {
         $user = User::findOrFail($id);
-        
+
         if ((int)Auth::guard('admin')->user()->user_role > 1) {
             abort(403, 'You cannot delete users of equal or higher rank');
         }
-        
+
         $user->delete();
 
         return redirect()->route('admin.users.index')->with('success', 'User deleted successfully!');
@@ -277,7 +279,7 @@ class UserController extends Controller
 
 
         $user = User::findOrFail($request->id);
-        
+
         if ((int)Auth::guard('admin')->user()->user_role > 1) {
             return response()->json(['warning' => 'You cannot change status of users with equal or higher rank']);
         }
