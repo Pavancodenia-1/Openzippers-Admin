@@ -45,28 +45,27 @@ class transactionController extends Controller
     }
 
     // VALIDATE AND STORE A NEW USER
-    public function store(Request $request)
-    {
-        // dd($request->all());
-        $request->validate([
-            'price' => 'required|double',
-            'title' => 'nullable',
-            'text' => 'nullable',
-            'status' => 'required|in:0,1',
-            'type' => 'nullable',
-            'is_certified' => 'required',
-            'is_publish' => 'nullable',
+    // public function store(Request $request)
+    // {
+    //     $request->validate([
+    //         'price' => 'required|double',
+    //         'title' => 'nullable',
+    //         'text' => 'nullable',
+    //         'status' => 'required|in:0,1',
+    //         'type' => 'nullable',
+    //         'is_certified' => 'required',
+    //         'is_publish' => 'nullable',
 
-        ]);
+    //     ]);
 
-        $transaction = new Transaction();
-        $transaction->name = $request->name;
-        $transaction->username = $request->username;
+    //     $transaction = new Transaction();
+    //     $transaction->name = $request->name;
+    //     $transaction->username = $request->username;
 
-        $transaction->save();
+    //     $transaction->save();
 
-        return redirect()->route('admin.transaction.index')->with('success', 'User registered successfully!');
-    }
+    //     return redirect()->route('admin.transaction.index')->with('success', 'Transaction registered successfully!');
+    // }
 
     // UPDATE A USER'S DETAILS
     public function update(Request $request)
@@ -79,27 +78,34 @@ class transactionController extends Controller
             abort(403, 'You cannot update users');
         }
 
-        $request->validate([
-            'price' => 'required|numeric',
-            'title' => 'nullable|string',
-            'text' => 'nullable|string',
-            'status' => 'required|in:0,1',
-            'type' => 'required|in:post,literature,video,audio',
-            'is_certified' => 'required|in:yes,no',
-            'is_publish' => 'nullable|in:yes,no',
+        $validated = $request->validate([
+            'subscription_id' => 'nullable|string|max:255',
+            'post_id' => 'nullable|integer',
+            'stripe_transaction_id' => 'nullable|string|max:255',
+            'invoice_id' => 'nullable|string|max:255',
+            'stream_id' => 'nullable|string|max:255',
+            'message_id' => 'nullable|string|max:255',
+            'unlock_type' => 'nullable|string|max:255',
+            'status' => 'required|string|in:approved,canceled,declined,initiated',
+            'video_call_id' => 'nullable|string|max:255',
+            'audio_call_id' => 'nullable|string|max:255',
+            'type' => 'required|string|in:deposite,message-unlock,one-month-subscription,stream-access,post-unlock,tip,withdrawal',
+            'chat_id' => 'nullable|string|max:255',
+            'payment_provider' => 'required|string|max:255',
+            'amount' => 'required|numeric|min:0',
+            'nowpayments_payment_id' => 'nullable|string|max:255',
+            'nowpayments_order_id' => 'nullable|string|max:255',
+            'created_at' => 'nullable|date',
+            'ccbill_payment_token' => 'nullable|string|max:255',
+            'ccbill_transaction_id' => 'nullable|string|max:255',
+            'ccbill_subscription_id' => 'nullable|string|max:255',
+            'paystack_payment_token' => 'nullable|string|max:255',
         ]);
 
-        $transaction->update([
-            'price' => $request->price,
-            'title' => $request->title,
-            'text' => $request->text,
-            'status' => $request->status,
-            'type' => $request->type,
-            'is_certified' => $request->is_certified,
-            'is_publish' => $request->is_publish,
-        ]);
 
-        return redirect()->route('admin.transaction.index')->with('success', 'User updated successfully!');
+        $transaction->update($validated);
+
+        return redirect()->route('admin.transaction.index')->with('success', 'Transaction updated successfully!');
     }
 
     // DELETE A USER
@@ -113,6 +119,6 @@ class transactionController extends Controller
 
         $transaction->delete();
 
-        return redirect()->route('admin.transaction.index')->with('success', 'User deleted successfully!');
+        return redirect()->route('admin.transaction.index')->with('success', 'Transaction deleted successfully!');
     }
 }

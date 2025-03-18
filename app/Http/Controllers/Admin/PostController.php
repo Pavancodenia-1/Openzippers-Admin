@@ -77,28 +77,28 @@ class PostController extends Controller
     }
 
     // VALIDATE AND STORE A NEW USER
-    public function store(Request $request)
-    {
-        // dd($request->all());
-        $request->validate([
-            'price' => 'required|double',
-            'title' => 'nullable',
-            'text' => 'nullable',
-            'status' => 'required|in:0,1',
-            'type' => 'nullable',
-            'is_certified' => 'required',
-            'is_publish' => 'nullable',
+    // public function store(Request $request)
+    // {
+    //     // dd($request->all());
+    //     $request->validate([
+    //         'price' => 'required|double',
+    //         'title' => 'nullable',
+    //         'text' => 'nullable',
+    //         'status' => 'required|in:0,1',
+    //         'type' => 'nullable',
+    //         'is_certified' => 'required',
+    //         'is_publish' => 'nullable',
 
-        ]);
+    //     ]);
 
-        $post = new Post();
-        $post->name = $request->name;
-        $post->username = $request->username;
+    //     $post = new Post();
+    //     $post->name = $request->name;
+    //     $post->username = $request->username;
 
-        $post->save();
+    //     $post->save();
 
-        return redirect()->route('admin.posts.index')->with('success', 'User registered successfully!');
-    }
+    //     return redirect()->route('admin.posts.index')->with('success', 'Post registered successfully!');
+    // }
 
     // UPDATE A USER'S DETAILS
     public function update(Request $request)
@@ -131,7 +131,7 @@ class PostController extends Controller
             'is_publish' => $request->is_publish,
         ]);
 
-        return redirect()->route('admin.posts.index')->with('success', 'User updated successfully!');
+        return redirect()->route('admin.posts.index')->with('success', 'Post updated successfully!');
     }
 
     // DELETE A USER
@@ -145,7 +145,7 @@ class PostController extends Controller
 
         $post->delete();
 
-        return redirect()->route('admin.posts.index')->with('success', 'User deleted successfully!');
+        return redirect()->route('admin.posts.index')->with('success', 'Post deleted successfully!');
     }
 
     public function show($id)

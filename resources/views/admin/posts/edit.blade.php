@@ -25,7 +25,7 @@ dd($post);
     <div class="col-lg-12">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">{{ ucfirst($mode ?? 'create') }} User</h3>
+                <h3 class="card-title">{{ ucfirst($mode ?? 'create') }} Post</h3>
             </div>
             <div class="card-body">
                 @if ($mode == 'edit' || $mode == 'create')

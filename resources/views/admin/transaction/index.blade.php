@@ -4,23 +4,6 @@
 
 @section('admin-main-section')
 
-<style>
-    .truncate {
-        width: 200px;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        cursor: pointer;
-        position: relative;
-        display: inline-block;
-    }
-
-    .truncate:hover {
-        white-space: normal;
-        overflow: visible;
-        padding: 5px;
-    }
-</style>
 
 <!-- PAGE-HEADER -->
 <div class="page-header">
