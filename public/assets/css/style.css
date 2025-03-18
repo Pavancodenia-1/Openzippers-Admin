@@ -795,8 +795,8 @@ body {
     -webkit-text-size-adjust: none;
     -ms-touch-action: manipulation;
     touch-action: manipulation;
-    -webkit-font-feature-settings: "liga"0;
-    font-feature-settings: "liga"0;
+    -webkit-font-feature-settings: "liga" 0;
+    font-feature-settings: "liga" 0;
     overflow-y: scroll;
     position: relative;
 }
@@ -6384,6 +6384,7 @@ ul.dropdown-menu li.dropdown ul.dropdown-menu .dropdown-plus-title {
     font-size: 0.875rem;
     font-weight: 400;
     line-height: 1.5;
+    min-height: 2.25rem;
     color: #4d5875;
     background-color: #fff;
     background-clip: padding-box;

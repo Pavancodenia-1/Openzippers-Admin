@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\PostController;
+use App\Http\Controllers\Admin\transactionController;
 use App\Http\Middleware\Admin;
 use App\Http\Middleware\CheckAuthStatus;
 use App\Http\Middleware\CheckAdmin;
@@ -82,6 +83,32 @@ Route::middleware([CheckAuthStatus::class])->group(function () {
             Route::get('view/{id}', 'view')->name('view');
             Route::post('update', 'updateProfile')->name('update');
             Route::post('update-password', 'updatePassword')->name('update.password');
+        });
+    });
+
+    // Tansaction routes
+
+    Route::prefix('transaction')->name('transaction.')->controller(transactionController::class)->group(function () {
+
+        // Admin routes
+        Route::middleware(Admin::class)->group(function () {
+            Route::get('create', 'create')->name('create');
+            Route::post('store', 'store')->name('store');
+            Route::put('status', 'status')->name('status');
+            Route::delete('/{id}', 'destroy')->name('destroy');
+        });
+
+        //Manager routes
+        Route::middleware(Manager::class)->group(function () {
+            Route::get('edit/{id}', 'edit')->name('edit');
+            Route::put('update/{id}', 'update')->name('update');
+        });
+
+        // Member routes
+        Route::middleware(Member::class)->group(function () {
+            Route::get('/', 'index')->name('index');
+            Route::get('view/{id}', 'view')->name('view');
+            route::get('show/{id}', 'show')->name('show');
         });
     });
 });

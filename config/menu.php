@@ -48,7 +48,7 @@ return [
             ],
             [
                 'label' => 'Posts',
-                'icon' => 'fe fe-user',
+                'icon' => 'fe fe-post',
                 // 'route' => 'javascript:void(0)',
                 'active' => 'admin/posts*',
                 'sub_items' => [
@@ -56,6 +56,19 @@ return [
                         'label' => 'Manage Posts',
                         'route' => 'admin.posts.index',
                         'active' => 'admin/posts*',
+                    ],
+                ],
+            ],
+            [
+                'label' => 'Money',
+                'icon' => 'fe fe-money-bills',
+                // 'route' => 'javascript:void(0)',
+                'active' => 'admin/transaction*',
+                'sub_items' => [
+                    [
+                        'label' => 'Transactions',
+                        'route' => 'admin.transaction.index',
+                        'active' => 'admin/transaction*',
                     ],
                 ],
             ],
