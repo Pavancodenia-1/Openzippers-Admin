@@ -95,5 +95,5 @@ $useroption[$usr->id] = $usr->name . ' , ' . $usr->email;
             $('.product-select').select2(); 
         });
 </script> -->
-<!-- use for multiple dropdowns -->hello
+<!-- use for multiple dropdowns -->
 @endsection
