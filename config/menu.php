@@ -11,32 +11,12 @@ return [
             ],
         ],
     ],
-    // 'tools' => [
-    //     'title' => 'Tools & Management',
-    //     'items' => [
-    //         [
-    //             'label' => 'Users',
-    //             'icon' => 'fe fe-user',
-    //             // 'route' => 'javascript:void(0)',
-    //             'active' => 'admin/users*',
-    //             'sub_items' => [
-    //                 [
-    //                     'label' => 'Manage Users',
-    //                     'route' => 'admin.users.index',
-    //                     'active' => 'admin/users*',
-    //                 ],
-    //             ],
-    //         ],
-    //     ],
-    // ],
-
     'tools' => [
         'title' => 'Tools & Management',
         'items' => [
             [
                 'label' => 'Users',
                 'icon' => 'fe fe-user',
-                // 'route' => 'javascript:void(0)',
                 'active' => 'admin/users*',
                 'sub_items' => [
                     [
@@ -48,8 +28,7 @@ return [
             ],
             [
                 'label' => 'Posts',
-                'icon' => 'fe fe-post',
-                // 'route' => 'javascript:void(0)',
+                'icon' => 'fe fe-file-text',
                 'active' => 'admin/posts*',
                 'sub_items' => [
                     [
@@ -61,14 +40,30 @@ return [
             ],
             [
                 'label' => 'Money',
-                'icon' => 'fe fe-money-bills',
-                // 'route' => 'javascript:void(0)',
+                'icon' => 'fe fe-dollar-sign',
                 'active' => 'admin/transaction*',
                 'sub_items' => [
                     [
                         'label' => 'Transactions',
                         'route' => 'admin.transaction.index',
                         'active' => 'admin/transaction*',
+                    ],
+                ],
+            ],
+            [
+                'label' => 'Wallet',
+                'icon' => 'fe fe-credit-card',
+                'active' => 'admin/wallet*',
+                'sub_items' => [
+                    [
+                        'label' => 'Add Balance',
+                        'route' => 'admin.wallet.addBalenceForm',
+                        'active' => 'admin/wallet/add-balance*',
+                    ],
+                    [
+                        'label' => 'Wallet History',
+                        'route' => 'admin.wallet.index',
+                        'active' => 'admin/wallet/history*',
                     ],
                 ],
             ],

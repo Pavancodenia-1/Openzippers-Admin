@@ -22,5 +22,7 @@ class DatabaseSeeder extends Seeder
         $this->call(PostSeeder::class);
         $this->call(AttachmentSeeder::class);
         $this->call(TransactionSeeder::class);
+        $this->call(WalletSeeder::class);
+        $this->call(WalletHistorySeeder::class);
     }
 }

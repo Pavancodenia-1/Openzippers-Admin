@@ -1,6 +1,6 @@
 @extends('admin.layout.main')
 
-@section('admin-page-title', ucfirst($mode ?? 'Manage Posts'))
+@section('admin-page-title', ucfirst($mode ?? 'Transactions'))
 
 @section('admin-main-section')
 
@@ -8,7 +8,7 @@
 <!-- PAGE-HEADER -->
 <div class="page-header">
     <div class="d-flex justify-content-between align-items-center">
-        <h1 class="page-title">{{ ucfirst($mode ?? 'Manage Posts') }}</h1>
+        <h1 class="page-title">{{ ucfirst($mode ?? 'Transactions') }}</h1>
 
         <!-- @if (Auth::guard('admin')->check() && Auth::guard('admin')->user()->user_role<= 1)
                 <a href="{{ route('admin.posts.create') }}"><x-buttons.simple-button class="btn btn-primary" type="button">Add
@@ -26,7 +26,7 @@
     <div class="col-lg-12">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">All Posts</h3>
+                <h3 class="card-title">All Transactions</h3>
             </div>
             <div class="card-body">
                 <div class="table-responsive">

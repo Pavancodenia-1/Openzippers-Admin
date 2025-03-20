@@ -15,7 +15,6 @@ class UserController extends Controller
     // RETRIEVE ALL USERS AND DISPLAY THEM IN A VIEW
     public function index()
     {
-        // $users = User::all();
         // $users = DB::table('users')
         //     ->leftjoin('posts', 'users.id', '=', 'posts.user_id')
         //     ->select('users.*', DB::raw('(SELECT COUNT(*) FROM posts WHERE posts.user_id = users.id) as posts_count'))
@@ -146,10 +145,6 @@ class UserController extends Controller
             $user->avatar = FileUploader::uploadFile($request->file('avatar'), 'images/admin-avatar');
         }
 
-        // if ($request->hasFile('image')) {
-        //     $user->image = FileUploader::uploadFile($request->file('image'), 'images/admin-user_images');
-        // }
-
         $user->fill($request->except([
             'password',
             'password_confirmation',
@@ -245,10 +240,6 @@ class UserController extends Controller
         if ($request->hasFile('avatar')) {
             $user->avatar = FileUploader::uploadFile($request->file('avatar'), 'images/admin-avatar', $user->avatar);
         }
-
-        // if ($request->hasFile('image')) {
-        //     $user->image = FileUploader::uploadFile($request->file('image'), 'images/admin-user_images',$user->image);
-        // }
 
         $user->save();
 

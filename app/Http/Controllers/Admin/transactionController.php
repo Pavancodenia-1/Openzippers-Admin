@@ -67,6 +67,7 @@ class transactionController extends Controller
     //     return redirect()->route('admin.transaction.index')->with('success', 'Transaction registered successfully!');
     // }
 
+
     // UPDATE A USER'S DETAILS
     public function update(Request $request)
     {
